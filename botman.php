@@ -17,7 +17,7 @@
    $botman = BotManFactory::create($config);
 
   
-$botman->hears('#{word}', function ($bot, $word) {
+$botman->hears('{word}', function ($bot, $word) {
     
         $lang = DetectLanguage::simpleDetect($word);
         $target = "ja";
