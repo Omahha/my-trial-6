@@ -8,9 +8,8 @@
     <style>
         .main-card{
             width:  100%;
-            min-width: 300px;
+            min-width: 500px;
         }
-        
         .msgTime, .msgHeader{
             font-size: 0.6em;
             border: none;
@@ -115,7 +114,7 @@
                 <div class="card-footer">
                     <div class="row m-2">
                        <div class="col-10">
-                              <input class="form-control" type="text" id="input">
+                              <input class="form-control" type="text" id="input" autofocus>
                        </div>
                        <div class="col-2">
                            <button id="sendBtn" class="btn btn-outline-success" type=button onclick="sendText()">send</button>
@@ -187,7 +186,7 @@
                     $replyTime = $date2.getHours()+':'+$date2.getMinutes();
                     if($indicator == 'translate'){
                         $botText = '<div class="row justify-content-start mb-1">';
-                        $botText = $botText+'<div class="card">';
+                        $botText = $botText+'<div class="card" style="max-width: 300px">';
                         $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
                         $botText = $botText+'<div class="card-body p-2">';
                         $botText = $botText+'<p class="card-text msgBody">'+　result.messages[0].text　+'</p>';
@@ -198,7 +197,7 @@
                     
                     }else if($indicator == 'instagram'){
                         $botText = '<div class="row justify-content-start mb-1">';
-                        $botText = $botText+'<div class="card" style="max-width: 200px;">';
+                        $botText = $botText+'<div class="card" style="max-width: 300px;">';
                         $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
                         $botText = $botText+'<img src="'+ result.messages[0].additionalParameters.imgSrc +'" alt="" class="card-img-top instImg">';
                         $botText = $botText+'<div class="card-body p-2">';
@@ -213,7 +212,7 @@
                         
                     }else if($indicator == 'error'){
                         $botText = '<div class="row justify-content-start mb-1">';
-                        $botText = $botText+'<div class="card">';
+                        $botText = $botText+'<div class="card" style="max-width: 300px">';
                         $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
                         $botText = $botText+'<div class="card-body p-2">';
                         $botText = $botText+'<p class="card-text msgBody">'+　result.messages[0].text　+'</p>';
