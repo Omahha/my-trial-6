@@ -118,7 +118,7 @@
                               <input class="form-control" type="text" id="input">
                        </div>
                        <div class="col-2">
-                           <button class="btn btn-outline-success" type=button onclick="sendText()">send</button>
+                           <button id="sendBtn" class="btn btn-outline-success" type=button onclick="sendText()">send</button>
                        </div>
                     </div>
                 </div>
@@ -130,6 +130,15 @@
         function scroll(){
             $('.main-card-body').scrollTop($('.main-card-body')[0].scrollHeight);
         }
+        
+        document.querySelector("#input").addEventListener("keyup", function(event){
+            event.preventDefault();
+            
+            if(event.keyCode === 13){
+                document.querySelector("#sendBtn").click();
+            }
+        });
+        
         function sendText(){
             let text = document.querySelector("#input").value;
             console.log(text);
@@ -202,12 +211,12 @@
                         $botText = $botText+'</div>';
                         $botText = $botText+'</div>';
                         
-                    }else{
+                    }else if($indicator == 'error'){
                         $botText = '<div class="row justify-content-start mb-1">';
                         $botText = $botText+'<div class="card">';
                         $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
                         $botText = $botText+'<div class="card-body p-2">';
-                        $botText = $botText+'<p class="card-text msgBody">'+　"?????"　+'</p>';
+                        $botText = $botText+'<p class="card-text msgBody">'+　result.messages[0].text　+'</p>';
                         $botText = $botText+'</div>';
                         $botText = $botText+'<div class="card-footer text-muted text-right bg-white msgTime">'+ $replyTime +'</div>';
                         $botText = $botText+'</div>';
