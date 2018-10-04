@@ -165,15 +165,6 @@
                     $userText = $userText+'</div>';
                     $userText = $userText+'</div>';
                     
-                    /*<div class="row justify-content-end mb-1">
-                        <div class="card text-right">
-                            <div class="card-header msgHeader">from A</div>
-                                <div class="card-body p-2">
-                                    <p class="card-text msgBody">message A</p>
-                                </div>
-                            <div class="card-footer text-muted bg-white msgTime">01:00</div>
-                        </div>
-                    </div>*/
                     $('.displayArea').append($userText);
                     $("#input").val("");
                     scroll();
@@ -195,15 +186,7 @@
                         $botText = $botText+'<div class="card-footer text-muted text-right bg-white msgTime">'+ $replyTime +'</div>';
                         $botText = $botText+'</div>';
                         $botText = $botText+'</div>';
-                        /*<div class="row justify-content-start mb-1">
-                                <div class="card">
-                                    <div class="card-header msgHeader">from A</div>
-                                    <div class="card-body p-2">
-                                        <p class="card-text msgBody">message A</p>
-                                    </div>
-                                    <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
-                                </div>
-                            </div>*/
+                    
                     }else if($indicator == 'instagram'){
                         $botText = '<div class="row justify-content-start mb-1">';
                         $botText = $botText+'<div class="card" style="max-width: 200px;">';
@@ -218,17 +201,17 @@
                         $botText = $botText+'<div class="card-footer text-muted text-right bg-white msgTime">'+ $replyTime +'</div>';
                         $botText = $botText+'</div>';
                         $botText = $botText+'</div>';
-                        /*<div class="row justify-content-start mb-1">
-                                <div class="card" style="max-width: 200px;">
-                                    <div class="card-header msgHeader">from Bot</div>
-                                    <img src="./img/img.jpg" alt="" class="card-img-top instImg">
-                                    <div class="card-body p-2">
-                                        
-                                        <p class="card-text">Instagram Caption</p>
-                                    </div>
-                                    <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
-                                </div>
-                            </div>*/
+                        
+                    }else{
+                        $botText = '<div class="row justify-content-start mb-1">';
+                        $botText = $botText+'<div class="card">';
+                        $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
+                        $botText = $botText+'<div class="card-body p-2">';
+                        $botText = $botText+'<p class="card-text msgBody">'+　"?????"　+'</p>';
+                        $botText = $botText+'</div>';
+                        $botText = $botText+'<div class="card-footer text-muted text-right bg-white msgTime">'+ $replyTime +'</div>';
+                        $botText = $botText+'</div>';
+                        $botText = $botText+'</div>';
                     }
                     
                     $('.displayArea').append($botText);
