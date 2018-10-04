@@ -22,6 +22,11 @@
         .instImg{
             border-radius: 0;
         }
+        .main-card-body{
+            height: 75vh;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
     </style>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -60,10 +65,10 @@
                 <div class="card-header bg-warning text-white">
                     <h3 class="m-0">Adglobe Bot</h3>
                 </div>
-                <div class="card-body">
-                    <div class="container">
+                <div class="card-body main-card-body d-flex">
+                    <div class="container displayArea">
                            <!--Text from User-->
-                            <div class="row justify-content-end mb-1">
+                            <!--<div class="row justify-content-end mb-1">
                                 <div class="card text-right">
                                     <div class="card-header msgHeader">from A</div>
                                     <div class="card-body p-2">
@@ -71,32 +76,40 @@
                                     </div>
                                     <div class="card-footer text-muted bg-white msgTime">01:00</div>
                                 </div>
-                            </div>
+                            </div>-->
                             
                             <!--Text from Bot-->
                             <div class="row justify-content-start mb-1">
                                 <div class="card">
-                                    <div class="card-header msgHeader">from A</div>
+                                    <div class="card-header msgHeader">Bot</div>
                                     <div class="card-body p-2">
-                                        <p class="card-text msgBody">message A</p>
-                                    </div>
-                                    <div class="card-footer text-muted bg-white msgTime">01:00</div>
-                                </div>
-                            </div>
-                            
-                            <!--Instagram from Bot-->
-                            <div class="row justify-content-start mb-1">
-                                <div class="card" style="max-width: 200px;">
-                                    <div class="card-header msgHeader">from Bot</div>
-                                    <img src="./img/img.jpg" alt="" class="card-img-top instImg">
-                                    <div class="card-body p-2">
-                                        
-                                        <p class="card-text">Instagram Caption</p>
+                                        <p class="card-text msgBody"># + 文章又は言葉　→　翻訳</p>
                                     </div>
                                     <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
                                 </div>
                             </div>
-                            <div id="result"></div>
+                            <div class="row justify-content-start mb-1">
+                                <div class="card">
+                                    <div class="card-header msgHeader">Bot</div>
+                                    <div class="card-body p-2">
+                                        <p class="card-text msgBody">"@" + インスタグラムのユーザー名　→　直近投稿</p>
+                                    </div>
+                                    <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
+                                </div>
+                            </div>
+                            
+                            <!--Instagram from Bot-->
+                            <!--<div class="row justify-content-start mb-1">
+                                <div class="card" style="max-width: 200px;">
+                                    <div class="card-header msgHeader">from Bot</div>
+                                    <img src="./img/img.jpg" alt="" class="card-img-top instImg">
+                                    <div class="card-body p-2">
+                                        <p class="card-text">Instagram Caption</p>
+                                    </div>
+                                    <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
+                                </div>
+                            </div>-->
+
                     </div>
                 </div>
                 <div class="card-footer">
@@ -114,7 +127,9 @@
     </div>
     
     <script>
-        
+        function scroll(){
+            $('.main-card-body').scrollTop($('.main-card-body')[0].scrollHeight);
+        }
         function sendText(){
             let text = document.querySelector("#input").value;
             console.log(text);
@@ -138,12 +153,17 @@
                 processData: false,
                 contentType: false,
                 beforeSend: function(){
+                    $date = new Date();
+                    $sendTime = $date.getHours()+':'+$date.getMinutes();
                     $userText = '<div class="row justify-content-end mb-1">';
                     $userText = $userText+'<div class="card text-right">';
-                    $userText = $userText+'<div class="card-header msgHeader">from A</div>';
+                    $userText = $userText+'<div class="card-header msgHeader">User</div>';
                     $userText = $userText+'<div class="card-body p-2">';
-                    $userText = $userText+'<p class="card-text msgBody">message A</p>';
-                    $userText
+                    $userText = $userText+'<p class="card-text msgBody">'+ text +'</p>';
+                    $userText = $userText+'</div>';
+                    $userText = $userText+'<div class="card-footer text-muted bg-white msgTime">'+ $sendTime +'</div>';
+                    $userText = $userText+'</div>';
+                    $userText = $userText+'</div>';
                     
                     /*<div class="row justify-content-end mb-1">
                         <div class="card text-right">
@@ -154,13 +174,66 @@
                             <div class="card-footer text-muted bg-white msgTime">01:00</div>
                         </div>
                     </div>*/
-                    $('.container').append($userText);
+                    $('.displayArea').append($userText);
+                    $("#input").val("");
+                    scroll();
                 },
                 
                 
                 success: function(result){
-                    $("#input").val("");
-                    $("#result").html(result.messages[0].text);
+                    let $indicator = result.messages[0].additionalParameters.type;
+                    console.log($indicator);
+                    $date2 = new Date();
+                    $replyTime = $date2.getHours()+':'+$date2.getMinutes();
+                    if($indicator == 'translate'){
+                        $botText = '<div class="row justify-content-start mb-1">';
+                        $botText = $botText+'<div class="card">';
+                        $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
+                        $botText = $botText+'<div class="card-body p-2">';
+                        $botText = $botText+'<p class="card-text msgBody">'+　result.messages[0].text　+'</p>';
+                        $botText = $botText+'</div>';
+                        $botText = $botText+'<div class="card-footer text-muted text-right bg-white msgTime">'+ $replyTime +'</div>';
+                        $botText = $botText+'</div>';
+                        $botText = $botText+'</div>';
+                        /*<div class="row justify-content-start mb-1">
+                                <div class="card">
+                                    <div class="card-header msgHeader">from A</div>
+                                    <div class="card-body p-2">
+                                        <p class="card-text msgBody">message A</p>
+                                    </div>
+                                    <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
+                                </div>
+                            </div>*/
+                    }else if($indicator == 'instagram'){
+                        $botText = '<div class="row justify-content-start mb-1">';
+                        $botText = $botText+'<div class="card" style="max-width: 200px;">';
+                        $botText = $botText+'<div class="card-header msgHeader">Bot</div>';
+                        $botText = $botText+'<img src="'+ result.messages[0].additionalParameters.imgSrc +'" alt="" class="card-img-top instImg">';
+                        $botText = $botText+'<div class="card-body p-2">';
+                        
+                        let captionEnd = (result.messages[0].additionalParameters.caption).length>70?'...</p>':'</p>';
+                        $botText = $botText+'<p class="card-text">'+ (result.messages[0].additionalParameters.caption).substring(0,70) + captionEnd;
+                        
+                        $botText = $botText+'</div>';
+                        $botText = $botText+'<div class="card-footer text-muted text-right bg-white msgTime">'+ $replyTime +'</div>';
+                        $botText = $botText+'</div>';
+                        $botText = $botText+'</div>';
+                        /*<div class="row justify-content-start mb-1">
+                                <div class="card" style="max-width: 200px;">
+                                    <div class="card-header msgHeader">from Bot</div>
+                                    <img src="./img/img.jpg" alt="" class="card-img-top instImg">
+                                    <div class="card-body p-2">
+                                        
+                                        <p class="card-text">Instagram Caption</p>
+                                    </div>
+                                    <div class="card-footer text-muted text-right bg-white msgTime">01:00</div>
+                                </div>
+                            </div>*/
+                    }
+                    
+                    $('.displayArea').append($botText);
+                    $botText = "";
+                    scroll();
                 }
             });
         }
